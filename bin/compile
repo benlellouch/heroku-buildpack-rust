@@ -54,20 +54,6 @@ if [ -z ${VERSION+x} ]; then
   exit 1
 fi
 
-# Notify users running old, unstable versions of Rust about how to deploy
-# successfully.
-if [ $RUST_SKIP_BUILD -ne 1  ] && ( [ ! -z ${CARGO_URL+x} ] || [ ! -f "./Cargo.toml" ] ); then
-    >&2 cat <<EOF
-To deploy a modern Rust app, make sure you have a Cargo.toml file, and that
-you do not define CARGO_URL or CARGO_VERSION in RustConfig.  If you're
-using an older version of Rust, and you need to re-deploy an existing
-application, try setting your buildpack to:
-
-  https://github.com/emk/heroku-buildpack-rust.git#old-rust
-EOF
-    exit 1
-fi
-
 # Handle people who still aren't using Rustup.
 if [ ! -z ${URL+x} ]; then
     >&2 cat <<EOF
